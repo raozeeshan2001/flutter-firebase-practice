@@ -25,7 +25,7 @@ class _signupscreenState extends State<signupscreen> {
     passwordcontroller.dispose();
   }
 
-  void login() {
+  void signup() {
     setState(() {
       loading = true;
     });
@@ -105,7 +105,7 @@ class _signupscreenState extends State<signupscreen> {
               loading: loading,
               ontap: () {
                 if (Formkey.currentState!.validate()) {
-                  login();
+                  signup();
                 }
               },
             ),
