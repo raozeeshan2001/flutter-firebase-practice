@@ -6,6 +6,7 @@ import 'package:flutter_firebase_practice/widgets/round_btn.dart';
 
 class VerifyCode extends StatefulWidget {
   final verificationid;
+
   VerifyCode({super.key, required this.verificationid});
 
   @override
