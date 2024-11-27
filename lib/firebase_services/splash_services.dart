@@ -25,6 +25,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_practice/UI/auth/login_screen.dart';
+import 'package:flutter_firebase_practice/UI/firestore/firestore_list_screen.dart';
 import 'package:flutter_firebase_practice/UI/posts/post_screen.dart';
 
 class SplashServices {
@@ -43,7 +44,7 @@ class SplashServices {
           // If successful, navigate to the PostScreen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => PostScreen()),
+            MaterialPageRoute(builder: (context) => FirestoreListScreen()),
           );
         } catch (e) {
           // If there's an error (e.g., user doesn't exist anymore), navigate to LoginScreen
