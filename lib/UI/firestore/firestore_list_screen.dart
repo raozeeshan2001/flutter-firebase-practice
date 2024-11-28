@@ -16,7 +16,9 @@ class FirestoreListScreen extends StatefulWidget {
 class _FirestoreListScreenState extends State<FirestoreListScreen> {
   final auth = FirebaseAuth.instance;
   final dbref = FirebaseFirestore.instance.collection('users').snapshots();
+  final ref = FirebaseFirestore.instance.collection('users');
   final dialogcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,11 +56,42 @@ class _FirestoreListScreenState extends State<FirestoreListScreen> {
                         child: ListView.builder(
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
+                              String title = snapshot.data!.docs[index]['title']
+                                  .toString();
+
                               return ListTile(
                                 title:
                                     Text(snapshot.data!.docs[index]['title']),
-                                subtitle: Text(
-                                    snapshot.data!.docs[index].id.toString()),
+                                subtitle:
+                                    Text(snapshot.data!.docs[index]['id']),
+                                trailing: PopupMenuButton(
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                              child: ListTile(
+                                            title: Text('Edit'),
+                                            leading: Icon(Icons.edit),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              showmydialog(
+                                                  title,
+                                                  snapshot.data!.docs[index]
+                                                      ['id']);
+                                            },
+                                          )),
+                                          PopupMenuItem(
+                                              child: ListTile(
+                                            title: Text('Delete'),
+                                            leading: Icon(Icons.delete),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              ref
+                                                  .doc(snapshot
+                                                      .data!.docs[index]['id']
+                                                      .toString())
+                                                  .delete();
+                                            },
+                                          )),
+                                        ]),
                               );
                             }));
                   }
@@ -101,6 +134,7 @@ class _FirestoreListScreenState extends State<FirestoreListScreen> {
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    ref.doc(id).update({'title': dialogcontroller.text});
                   },
                   child: Text('update')),
             ],
