@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_firebase_practice/UI/auth/forgot_password_screen.dart';
 import 'package:flutter_firebase_practice/UI/auth/login_with_phonenumber.dart';
 import 'package:flutter_firebase_practice/UI/auth/signup_screen.dart';
 import 'package:flutter_firebase_practice/UI/posts/post_screen.dart';
@@ -62,101 +63,116 @@ class _LoginScreenState extends State<LoginScreen> {
         return true;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text('login screen'),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Form(
-                  key: Formkey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: emailcontroller,
-                        decoration: InputDecoration(
-                            hintText: 'email',
-                            //helperText: 'enter email e.g abc@gmail.com',
-                            prefixIcon: Icon(Icons.email)),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'enter email';
-                          }
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Form(
+                    key: Formkey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: emailcontroller,
+                          decoration: InputDecoration(
+                              hintText: 'email',
+                              //helperText: 'enter email e.g abc@gmail.com',
+                              prefixIcon: Icon(Icons.email)),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'enter email';
+                            }
 
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: passwordcontroller,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            hintText: 'password',
-                            // helperText: 'enter password',
-                            prefixIcon: Icon(Icons.wifi_password_sharp)),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'enter password';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  )),
-              RoundBtn(
-                title: 'Login',
-                loading: loading,
-                ontap: () {
-                  if (Formkey.currentState!.validate()) {
-                    login();
-                  }
-                },
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Dont have an account?'),
-                  TextButton(
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          controller: passwordcontroller,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              hintText: 'password',
+                              // helperText: 'enter password',
+                              prefixIcon: Icon(Icons.wifi_password_sharp)),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'enter password';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    )),
+                RoundBtn(
+                  title: 'Login',
+                  loading: loading,
+                  ontap: () {
+                    if (Formkey.currentState!.validate()) {
+                      login();
+                    }
+                  },
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => signupscreen()));
+                              builder: (context) => ForgotPasswordScreen()));
                     },
-                    child: Text('Sign up'),
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginWithPhonenumber()));
-                },
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: Colors.black)),
-                  child: Center(
-                    child: Text('login with phone'),
+                    child: Text('Forgot Password?'),
                   ),
                 ),
-              )
-            ],
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Dont have an account?'),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => signupscreen()));
+                      },
+                      child: Text('Sign up'),
+                    ),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginWithPhonenumber()));
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(color: Colors.black)),
+                    child: Center(
+                      child: Text('login with phone'),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
